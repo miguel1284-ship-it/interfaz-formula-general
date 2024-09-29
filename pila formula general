@@ -1,0 +1,92 @@
+import javax.swing.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+public class FormulaGeneralGUI {
+    public static void main(String[] args) {
+        // Crear el marco principal
+        JFrame frame = new JFrame("Fórmula General");
+        frame.setSize(400, 300);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setLayout(null);
+
+        // Etiquetas y campos de entrada
+        JLabel labelA = new JLabel("a:");
+        labelA.setBounds(50, 30, 50, 25);
+        JTextField fieldA = new JTextField();
+        fieldA.setBounds(100, 30, 150, 25);
+
+        JLabel labelB = new JLabel("b:");
+        labelB.setBounds(50, 70, 50, 25);
+        JTextField fieldB = new JTextField();
+        fieldB.setBounds(100, 70, 150, 25);
+
+        JLabel labelC = new JLabel("c:");
+        labelC.setBounds(50, 110, 50, 25);
+        JTextField fieldC = new JTextField();
+        fieldC.setBounds(100, 110, 150, 25);
+
+        // Área de texto para mostrar el resultado
+        JTextArea resultArea = new JTextArea();
+        resultArea.setBounds(50, 150, 300, 50);
+        resultArea.setEditable(false);
+
+        // Botón para calcular las soluciones
+        JButton calculateButton = new JButton("Calcular");
+        calculateButton.setBounds(100, 210, 100, 30);
+
+        // Botón para limpiar los campos
+        JButton clearButton = new JButton("Eliminar");
+        clearButton.setBounds(210, 210, 100, 30);
+
+        // Acciones del botón Calcular
+        calculateButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                try {
+                    double a = Double.parseDouble(fieldA.getText());
+                    double b = Double.parseDouble(fieldB.getText());
+                    double c = Double.parseDouble(fieldC.getText());
+
+                    // Calcular el discriminante
+                    double discriminante = Math.pow(b, 2) - 4 * a * c;
+
+                    if (discriminante < 0) {
+                        resultArea.setText("No hay soluciones reales.");
+                    } else {
+                        double x1 = (-b + Math.sqrt(discriminante)) / (2 * a);
+                        double x2 = (-b - Math.sqrt(discriminante)) / (2 * a);
+                        resultArea.setText("Solución 1: " + x1 + "\nSolución 2: " + x2);
+                    }
+                } catch (NumberFormatException ex) {
+                    resultArea.setText("Por favor ingresa valores válidos.");
+                }
+            }
+        });
+
+        // Acciones del botón Eliminar
+        clearButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                fieldA.setText("");
+                fieldB.setText("");
+                fieldC.setText("");
+                resultArea.setText("");
+            }
+        });
+
+        // Añadir componentes al marco
+        frame.add(labelA);
+        frame.add(fieldA);
+        frame.add(labelB);
+        frame.add(fieldB);
+        frame.add(labelC);
+        frame.add(fieldC);
+        frame.add(resultArea);
+        frame.add(calculateButton);
+        frame.add(clearButton);
+
+        // Mostrar la ventana
+        frame.setVisible(true);
+    }
+}
